@@ -15,9 +15,9 @@ description: >
 
 Treat every frontend task as both an engineering task and a product-design task.
 
-The interface is not finished merely because it compiles, renders, or satisfies the literal request. It is finished when the affected experience is also stable, readable, understandable, efficient, predictable, responsive, accessible, and consistent with the product.
+A user-facing implementation is not finished merely because it compiles, renders, or satisfies the literal request. It is finished when the affected experience is also stable, readable, understandable, efficient, predictable, responsive, accessible, and consistent with the product.
 
-Develop sensitivity to problems users often feel before they can name them:
+Continuously ask:
 
 > Is anything here harder, noisier, less stable, more confusing, or more cumbersome than necessary?
 
@@ -40,11 +40,9 @@ Stable before animated. Clear before clever. Efficient before decorative. Consis
 
 ## Rule Levels
 
-Interpret this skill using three levels:
-
 - **MUST** — hard constraint. Do not violate without an explicit higher-priority requirement.
-- **SHOULD** — default. Override only when the product structure or technical constraints provide a concrete reason.
-- **CONSIDER** — optional technique. Use only when it lowers total interaction cost or improves clarity without adding unnecessary complexity.
+- **SHOULD** — default. Override only for a concrete product or technical reason.
+- **CONSIDER** — optional technique. Use only when it lowers total interaction cost or improves clarity without unnecessary complexity.
 
 ## Ten Core Rules
 
@@ -58,7 +56,7 @@ Rendered behavior is the final authority.
 
 Do not silently change API behavior, permissions, authentication, billing, validation semantics, business rules, security behavior, destructive-operation semantics, or data meaning while performing UI work.
 
-If a UX improvement requires a product-behavior decision, separate the recommendation from the safe UI implementation unless the user explicitly authorized that change.
+If a UX improvement requires a product decision, separate the recommendation from the safe UI implementation unless the user explicitly authorized the behavior change.
 
 ### 3. MUST apply the user-facing content gate
 
@@ -74,13 +72,13 @@ Before adding text, heading, description, badge, banner, tooltip, card, metric, 
 
 If not, omit it.
 
-Never dump agent reasoning, debug data, developer notes, component names, token names, raw API details, backend enums, migration notes, temporary labels, TODOs, implementation commentary, or experimental state into normal product UI.
+Never dump agent reasoning, debug data, developer notes, component/token names, raw API details, backend enums, migration notes, temporary labels, TODOs, or implementation commentary into normal product UI.
 
-Do not invent production users, metrics, transactions, charts, or records merely to make the page look complete. Demo fixtures are appropriate only in clearly non-production demo, test, storybook, or design-system contexts.
+Do not invent production users, metrics, transactions, charts, or records merely to make a page look complete. Demo fixtures belong only in clearly non-production demo, test, storybook, or design-system contexts.
 
 Prefer fixing the interface over explaining the interface.
 
-Read `references/interface-restraint.md` when the task involves UI bloat, excess cards, copy, scrolling, dashboards, or unclear hierarchy.
+Read `references/interface-restraint.md` for UI bloat, excess cards/copy, dashboards, hierarchy, or scroll questions.
 
 ### 4. MUST preserve interface geometry across state changes
 
@@ -90,15 +88,15 @@ Loading is the final interface before its data has arrived. Keep stable geometry
 
 Distinguish initial loading from refreshing. Once real data is visible, prefer preserving it during refresh instead of returning the entire page to skeletons.
 
-Do not hide real layout instability with fade, scale, slide, or delayed reveal.
+Do not hide layout instability with fade, scale, slide, or delayed reveal.
 
-Read `references/layout-stability.md` for substantial loading, routing, sidebar, theme, animation, or CLS work.
+Read `references/layout-stability.md` for loading, routing, sidebar, theme, animation, or CLS work.
 
 ### 5. MUST justify every independent scroll region
 
-A scrollbar is not automatically wrong, but every newly introduced independent scrolling region is a design-review trigger.
+A scrollbar is not automatically wrong, but every newly introduced independent scroll region is a design-review trigger.
 
-Before adding fixed height, max-height, `overflow-y: auto`, or nested scrolling, ask whether natural page growth, better composition, reduced redundant chrome, wrapping, or more effective use of width would remove the need.
+Before adding fixed height, max-height, `overflow-y: auto`, or nested scrolling, ask whether natural page growth, better composition, reduced redundant chrome, wrapping, or more effective use of width removes the need.
 
 Prefer:
 
@@ -106,48 +104,37 @@ Prefer:
 2. one intentional regional scroll area;
 3. nested scrolling only when structurally necessary.
 
-Do not force everything into one viewport by shrinking text, touch targets, or useful spacing. The goal is to avoid artificial scrolling, not all scrolling.
+Do not force everything into one viewport by shrinking text, touch targets, or useful spacing. Avoid artificial scrolling, not all scrolling.
 
 ### 6. SHOULD optimize real task cost, not screenshot aesthetics
 
-Identify the user's primary tasks and prioritize improvements by:
+Identify primary tasks and prioritize improvements by:
 
 `Frequency × Friction × User Impact`
 
-Evaluate total interaction cost: clicks, page transitions, waiting, repeated input, repeated search, context reconstruction, decision complexity, and error risk.
+Evaluate total interaction cost: clicks, page transitions, waiting, repeated input/search, context reconstruction, decision complexity, and error risk.
 
-Make the primary action obvious. Preserve search/filter/sort/pagination/selection/scroll context where reasonable. Similar actions should appear in predictable places across similar pages.
+Make primary actions discoverable. Preserve search/filter/sort/pagination/selection/scroll context where reasonable. Keep equivalent actions predictable across similar pages.
 
-Read `references/product-ux.md` for lists, tables, forms, dashboards, settings, navigation, quick actions, and workflow redesign.
+Read `references/product-ux.md` for tables, forms, search/filter, navigation, dashboards, quick actions, and workflow redesign.
 
 ### 7. SHOULD fix systems before symptoms
 
-When a defect repeats, inspect shared infrastructure first:
-
-- design tokens;
-- global CSS;
-- app shell;
-- page container;
-- shared components;
-- toolbar/table/form patterns;
-- loading/empty/error patterns;
-- responsive rules.
+When a defect repeats, inspect shared infrastructure first: design tokens, global CSS, app shell, page containers, shared components, toolbars/tables/forms, loading/empty/error patterns, and responsive rules.
 
 Prefer one correct shared fix over many page-specific overrides.
 
-Do not over-abstract. Different workflows may require different compositions. Abstract only genuinely repeated patterns.
+Do not over-abstract. Different workflows may need different compositions. Abstract genuinely repeated patterns only.
 
 ### 8. SHOULD design responsiveness as reflow, not rerender
 
 Prefer CSS Grid, Flexbox, media queries, container queries, `minmax()`, `clamp()`, `auto-fit`, and `auto-fill` for ordinary responsive layout.
 
-Treat `window.innerWidth`, resize listeners, `ResizeObserver`, manual `isMobile`, and reactive column calculations as audit targets when they control presentation that CSS could handle.
+Treat `window.innerWidth`, resize listeners, `ResizeObserver`, manual `isMobile`, and reactive column calculations as audit targets when CSS could handle presentation more stably.
 
-Avoid competing breakpoint systems and resize feedback loops.
+Avoid competing breakpoint systems and resize feedback loops. Mobile is not compressed desktop.
 
-Mobile is not compressed desktop. Account for touch, safe areas, mobile keyboards, dynamic viewport behavior, sticky controls, and naturally different composition.
-
-Read `references/responsive-platform.md` for responsive or browser-behavior work.
+Read `references/responsive-platform.md` for responsive, mobile, viewport, browser-history, focus, or restoration work.
 
 ### 9. MUST preserve accessibility and readability
 
@@ -157,19 +144,19 @@ Preserve visible keyboard focus, semantic controls, usable labels, reasonable to
 
 Treat muted, placeholder, disabled, table-secondary, sidebar-inactive, badge, tooltip, and chart-label contrast as common failure points.
 
-When applicable, account for zoom, font scaling, reduced motion, high-contrast preferences, text expansion, localization, and RTL.
+When relevant, account for zoom, font scaling, reduced motion, high-contrast behavior, text expansion, localization, and RTL.
 
-Read `references/accessibility-i18n.md` when typography, motion, localization, forms, mobile, or accessibility are material to the task.
+Read `references/accessibility-i18n.md` when typography, motion, localization, forms, mobile interaction, or accessibility are material.
 
 ### 10. MUST deliver only the verified accepted state
 
-Experiments are allowed during implementation, but rejected proposals and abandoned intermediate approaches are control information, not the product's identity.
+Experiments are allowed, but rejected proposals and abandoned approaches are control information, not the product's identity.
 
-Generate final UI copy, component names, filenames, comments, documentation, commit messages, PR titles/descriptions, and handoff text from the verified accepted result.
+Generate final UI copy, names, filenames, comments, documentation, commit messages, PR text, and handoff from the verified accepted result.
 
 Do not leave task-owned residue such as `NewSidebar`, `FinalDashboard`, commented-out alternatives, debug code, experimental styles, temporary labels, or explanations of options that no longer matter.
 
-Preserve real history when required for safety, accuracy, compatibility, migration, audit, testing, API contracts, or a requested comparison.
+Preserve real history when required for safety, accuracy, compatibility, migration, audit, testing, API contracts, or requested comparison.
 
 Read `references/finalization.md` before commit/PR/handoff work after multiple revisions or rejected alternatives.
 
@@ -179,40 +166,26 @@ Follow this sequence for substantial frontend work.
 
 ### 1. Understand
 
-Identify:
+Identify the user's real task, existing design system/shared patterns, business constraints, technical constraints, and whether the problem is local or systemic.
 
-- the user's real task;
-- existing design system and shared patterns;
-- business and technical constraints;
-- whether the problem is local or systemic.
-
-Do not begin by blindly editing CSS.
+Do not start by blindly editing CSS.
 
 ### 2. Inspect
 
 Inspect the affected page plus relevant shared layout/components. When runnable tooling exists, inspect the actual interface before editing.
 
-Look for neighboring effects involving theme, loading, responsive behavior, overflow, navigation, and interaction state.
+Check related theme, loading, responsive, overflow, navigation, and interaction states.
 
 ### 3. Diagnose
 
-Classify findings by category:
+Classify findings as Functional, Stability, Readability, UX friction, Consistency, Responsive, Accessibility, or Visual polish.
 
-- Functional
-- Stability
-- Readability
-- UX friction
-- Consistency
-- Responsive
-- Accessibility
-- Visual polish
-
-Assign internal severity and confidence:
+Assign internal:
 
 - **Severity:** P0 / P1 / P2 / P3
 - **Confidence:** High / Medium / Low
 
-Use this policy:
+Policy:
 
 - High-confidence + high-impact + low-risk: fix directly when within scope.
 - Medium-confidence: prefer conservative changes or clearly scoped recommendations.
@@ -220,29 +193,25 @@ Use this policy:
 
 ### 4. Implement
 
-Fix root causes. Prefer shared/system changes when the defect is repeated.
+Fix root causes. Prefer shared/system changes when defects repeat.
 
-Do not expand a UI task into unrelated features, new analytics, new settings, new onboarding, or invented user-facing information.
+Do not expand UI work into unrelated features, new analytics/settings/onboarding, or invented user-facing information.
+
+When the project is Vue, audit relevant `v-if` layout replacement, presentation-driven `:key` remounts, Teleport/theme inheritance, geometry watchers, reactive resize logic, duplicate responsive/theme state, scoped-style token overrides, and router-layout remounting. These are audit targets, not blanket prohibitions.
 
 ### 5. Verify
 
-Inspect the changed result using available tooling.
+Inspect the changed result with available tooling.
 
-For substantial changes, verify representative affected states rather than only the happy path. Use the smallest relevant matrix, for example:
+Use the smallest relevant state matrix, for example desktop + mobile, loading + loaded, empty + error, light + dark, or sidebar expanded + collapsed.
 
-- desktop + mobile;
-- loading + loaded;
-- empty + error;
-- light + dark;
-- sidebar expanded + collapsed.
-
-Do not claim states were verified if they were not actually observed or tested.
+Do not claim a state was verified if it was not actually observed or tested.
 
 ### 6. Regression Check
 
-Check that shared changes did not break neighboring screens or expected behavior.
+Check that shared changes did not break neighboring screens or behavior.
 
-When tooling permits, check:
+When tooling permits, verify:
 
 - no unexpected console errors;
 - no unintended page-level horizontal overflow;
@@ -251,78 +220,33 @@ When tooling permits, check:
 - loading → loaded does not materially jump;
 - reduced-motion preference is respected when motion is involved;
 - 200% zoom remains operable for relevant workflows;
-- browser back/forward and focus/scroll restoration remain sensible when navigation was changed.
+- browser Back/Forward and focus/scroll restoration remain sensible when navigation changed.
 
-Use existing project tooling first. Do not install large dependencies solely to satisfy this checklist unless requested or clearly warranted.
+Use existing project tooling first. Do not install large dependencies solely for this checklist unless requested or clearly warranted.
 
 ### 7. Finalize
 
-Remove task-owned debug residue and abandoned experiments. Re-read final user-facing surfaces. Then derive comments, commit, PR, and handoff language from the final verified state.
+Remove task-owned debug residue and abandoned experiments. Re-read final user-facing surfaces. Derive comments, commit, PR, and handoff language from final verified behavior.
 
-## Interface Restraint Defaults
+## Default Heuristics
 
 These are SHOULD defaults, not universal laws:
 
 - prefer fewer purposeful surfaces over card-on-card composition;
 - avoid decorative copy in operational interfaces;
 - avoid many equally prominent actions;
-- use whitespace, typography, grid, and dividers before adding another panel;
-- avoid `transition-all` when it unintentionally animates layout properties;
+- use whitespace, typography, grid, and dividers before another panel;
+- avoid `transition-all` when it unintentionally animates layout geometry;
 - avoid arbitrary fixed heights;
 - prevent page-level horizontal scrolling;
-- keep themes focused on appearance rather than geometry;
+- keep theme changes focused on appearance rather than geometry;
 - prefer semantic design tokens over hard-coded UI-theme colors;
-- prefer natural content height unless the region genuinely needs independent navigation.
-
-## Product-UX Defaults
-
-These are SHOULD defaults:
-
+- prefer recognition over recall;
+- progressively disclose advanced/rare controls;
 - organize forms by user thinking rather than database schema;
-- use recognition over recall;
-- expose common actions and progressively disclose advanced ones;
-- keep dangerous actions protected but visually subordinate to normal primary work;
-- use inline validation and preserve user input after recoverable failure;
-- make errors actionable;
-- make empty states explain the next useful step when one exists;
-- keep active filters understandable;
-- avoid forcing tiny frequent actions through full detail pages;
-- distinguish global navigation from local page navigation;
-- dashboards should support decisions and actions rather than decorative analytics.
+- make errors actionable and preserve recoverable user work.
 
-## Techniques to Consider
-
-These are optional, never automatic:
-
-- Quick View / Sheet
-- Inline Edit
-- Bulk Actions
-- Undo
-- Auto Save
-- Command Palette
-- Recent / Favorites
-- Sticky action regions
-- Container Queries
-- Virtualization
-- Optimistic updates
-- Keyboard accelerators
-
-Use them only when they reduce total interaction cost without increasing confusion, risk, or product scope.
-
-## Vue-Specific Audit Targets
-
-When the project is Vue, inspect when relevant:
-
-- `v-if` replacing large layout trees;
-- presentation-driven `:key` values causing remounts;
-- Teleport and theme/token inheritance;
-- watchers controlling geometry;
-- reactive resize logic;
-- duplicate theme or responsive state;
-- scoped styles overriding semantic tokens;
-- router layouts remounting global shell unnecessarily.
-
-These are audit targets, not blanket prohibitions.
+Optional techniques such as Quick View, Inline Edit, Bulk Actions, Undo, Auto Save, Command Palette, Sticky Actions, Container Queries, Virtualization, Optimistic Updates, and keyboard accelerators are CONSIDER items only. Use them when they reduce total interaction cost without increasing confusion, risk, or scope.
 
 ## Completion Gate
 
@@ -336,7 +260,7 @@ Before finishing substantial frontend work, check the affected surface.
 - No unnecessary agent-generated UI copy.
 - No debug/developer/internal information in normal product UI.
 - No invented production data.
-- No redundant visible explanation that layout could replace.
+- No redundant explanation that clearer layout could replace.
 
 ### Layout & Scroll
 - Alignment, spacing, content width, and page padding are intentional.
@@ -347,7 +271,7 @@ Before finishing substantial frontend work, check the affected surface.
 ### Stability
 - Relevant loading/refreshing/navigation/resize/sidebar/theme transitions are stable.
 - Media reserves geometry where necessary.
-- No animation is masking structural instability.
+- No animation masks structural instability.
 
 ### Readability & Accessibility
 - Text remains readable in affected themes/states.
@@ -362,7 +286,7 @@ Before finishing substantial frontend work, check the affected surface.
 - Feedback and recovery are understandable.
 
 ### Responsive
-- Affected desktop and mobile compositions are usable.
+- Affected desktop/mobile compositions are usable.
 - Breakpoint transitions do not visibly oscillate or shake.
 
 ### Finalization
@@ -374,18 +298,18 @@ If a high-impact check fails, the task is not finished.
 
 ## Reference Loading
 
-Load detailed references only when relevant; do not read every reference for every task.
+Load only the relevant reference; do not read all references for every task.
 
-- `references/interface-restraint.md` — UI bloat, copy, cards, scrolling, hierarchy, dashboards.
+- `references/interface-restraint.md` — UI bloat, copy, cards, scroll, hierarchy, dashboards.
 - `references/layout-stability.md` — loading, refreshing, CLS, routing, sidebar, theme geometry, animation.
 - `references/product-ux.md` — workflows, tables, forms, search/filter, navigation, task efficiency.
-- `references/responsive-platform.md` — responsive layout, mobile realities, browser history/focus/viewport behavior.
-- `references/accessibility-i18n.md` — keyboard, focus, contrast, zoom, reduced motion, localization, RTL.
-- `references/finalization.md` — accepted-state delivery, names, comments, commits, PRs, handoffs.
+- `references/responsive-platform.md` — responsive layout, mobile reality, viewport/browser behavior, restoration.
+- `references/accessibility-i18n.md` — keyboard, focus, contrast, zoom, preferences, localization, RTL.
+- `references/finalization.md` — accepted-state delivery, naming, comments, commits, PRs, handoffs.
 
 ## Success Standard
 
-A new user should be able to understand where they are, what the page does, and what action matters without needing documentation.
+A new user should understand where they are, what the page does, and what action matters without documentation.
 
 An experienced user should experience less unnecessary clicking, navigation, repeated input, waiting, and context reconstruction.
 
