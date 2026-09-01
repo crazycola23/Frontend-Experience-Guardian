@@ -2,6 +2,18 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 0.2.1 — 2026-09-01
+
+### Changed
+
+- Strengthened page-header restraint: title-only is now the default, while subtitles, descriptions, eyebrows, and helper copy require explicit user intent or concrete information value.
+- Added a removal test and an explicit `when uncertain, omit the subtitle` tie-breaker to reduce generic AI-generated header copy.
+- Expanded the interface-restraint reference with clearer valid/invalid subtitle reasons and operational examples.
+
+### Added
+
+- Added `evals/unrequested-page-subtitle.md` to test both redundant subtitle generation and legitimate supporting-copy exceptions.
+
 ## 0.2.0 — 2026-08-24
 
 ### Changed
