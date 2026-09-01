@@ -56,6 +56,40 @@ SaaS/admin/workspace screens are not marketing landing pages. Avoid pushing the 
 
 Use available horizontal space intentionally on desktop while preserving readable line lengths and clear grouping.
 
+## Page-title and subtitle restraint
+
+Do not automatically place descriptive or explanatory copy beneath a page title or section title.
+
+A clear title should normally stand alone when surrounding navigation, workflow state, controls, and content already make the page purpose obvious. Do not add a subtitle merely to make a header feel complete, fill visual space, restate the title in a longer sentence, or explain an interface that is already self-evident.
+
+Supporting text beneath a title must contribute information that is materially useful before the user acts. Good reasons include:
+
+- an important constraint, consequence, or prerequisite;
+- unusual scope or context that is not otherwise visible;
+- necessary onboarding for a genuinely unfamiliar workflow;
+- actionable status, warning, recovery, or eligibility information;
+- a distinction that changes how the user should interpret the page or choose the next action.
+
+Weak reasons include:
+
+- restating what the page does;
+- paraphrasing the page title;
+- generic product or marketing language;
+- explaining obvious controls or workflow structure;
+- adding text only for visual balance.
+
+Examples of avoidable subtitle patterns:
+
+- `Users` followed by `Manage your users and account permissions.`
+- `Content Production` followed by `Configure content generation tasks and manage output.`
+- `Settings` followed by `Customize your preferences and application behavior.`
+
+A more useful subtitle changes the user's understanding or action, for example a quota, scope, prerequisite, destructive consequence, or unusual system state that is not otherwise visible.
+
+Use the removal test: if deleting the subtitle leaves the next action, page scope, and important constraints equally clear, omit it.
+
+Apply the same test to section headings, card descriptions, dialog subtitles, drawer descriptions, and helper text. Repetition across hierarchy levels is still repetition.
+
 ## Scroll review
 
 Treat new independent scroll regions as architecture decisions.
