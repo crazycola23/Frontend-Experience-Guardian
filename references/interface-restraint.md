@@ -56,37 +56,48 @@ SaaS/admin/workspace screens are not marketing landing pages. Avoid pushing the 
 
 Use available horizontal space intentionally on desktop while preserving readable line lengths and clear grouping.
 
-## Page-title and subtitle restraint
+## Page-header restraint
 
-Do not automatically place descriptive or explanatory copy beneath a page title or section title.
+**The default page-header pattern is title only. Supporting copy is an exception, not a standard ingredient.**
 
-A clear title should normally stand alone when surrounding navigation, workflow state, controls, and content already make the page purpose obvious. Do not add a subtitle merely to make a header feel complete, fill visual space, restate the title in a longer sentence, or explain an interface that is already self-evident.
+Do not add a subtitle, description, eyebrow, helper sentence, or explanatory sentence beneath or around a page title merely because page headers commonly contain one. Do not treat empty space below a title as a problem that needs words.
 
-Supporting text beneath a title must contribute information that is materially useful before the user acts. Good reasons include:
+Add supporting copy only when the user explicitly requested it or when it provides material information that is not already communicated by navigation, controls, content, visible state, or the title itself.
+
+Strong reasons include:
 
 - an important constraint, consequence, or prerequisite;
 - unusual scope or context that is not otherwise visible;
-- necessary onboarding for a genuinely unfamiliar workflow;
 - actionable status, warning, recovery, or eligibility information;
+- necessary guidance for a genuinely unfamiliar or ambiguous workflow;
 - a distinction that changes how the user should interpret the page or choose the next action.
 
 Weak reasons include:
 
 - restating what the page does;
 - paraphrasing the page title;
+- describing controls or content already visible below;
 - generic product or marketing language;
-- explaining obvious controls or workflow structure;
-- adding text only for visual balance.
+- making the header feel complete or polished;
+- filling visual space;
+- creating hierarchy that typography, spacing, alignment, grouping, or control placement could create without more words.
 
 Examples of avoidable subtitle patterns:
 
 - `Users` followed by `Manage your users and account permissions.`
 - `Content Production` followed by `Configure content generation tasks and manage output.`
 - `Settings` followed by `Customize your preferences and application behavior.`
+- `Projects` followed by `Create, organize, and manage your projects.`
 
-A more useful subtitle changes the user's understanding or action, for example a quota, scope, prerequisite, destructive consequence, or unusual system state that is not otherwise visible.
+Examples that may justify supporting copy because they change understanding or action:
 
-Use the removal test: if deleting the subtitle leaves the next action, page scope, and important constraints equally clear, omit it.
+- `Changes here apply to all workspaces.`
+- `Invitations expire after 7 days.`
+- `User creation is disabled while SSO enforcement is active.`
+
+Use the removal test: if deleting the supporting text leaves the next action, page scope, important constraints, and relevant system state equally clear, omit it.
+
+When uncertain, omit the subtitle.
 
 Apply the same test to section headings, card descriptions, dialog subtitles, drawer descriptions, and helper text. Repetition across hierarchy levels is still repetition.
 
