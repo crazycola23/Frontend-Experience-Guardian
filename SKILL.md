@@ -78,6 +78,8 @@ Do not invent production users, metrics, transactions, charts, or records merely
 
 Prefer fixing the interface over explaining the interface.
 
+Do not automatically add explanatory copy beneath a self-explanatory page or section title. Supporting text must add material context, constraint, state, consequence, or guidance that changes understanding or action; otherwise let the title stand alone.
+
 Read `references/interface-restraint.md` for UI bloat, excess cards/copy, dashboards, hierarchy, or scroll questions.
 
 ### 4. MUST preserve interface geometry across state changes
@@ -261,6 +263,7 @@ Before finishing substantial frontend work, check the affected surface.
 - No debug/developer/internal information in normal product UI.
 - No invented production data.
 - No redundant explanation that clearer layout could replace.
+- No page or section subtitle that merely restates a clear title or obvious surrounding context.
 
 ### Layout & Scroll
 - Alignment, spacing, content width, and page padding are intentional.
