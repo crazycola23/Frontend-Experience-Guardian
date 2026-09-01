@@ -78,7 +78,21 @@ Do not invent production users, metrics, transactions, charts, or records merely
 
 Prefer fixing the interface over explaining the interface.
 
-Do not automatically add explanatory copy beneath a self-explanatory page or section title. Supporting text must add material context, constraint, state, consequence, or guidance that changes understanding or action; otherwise let the title stand alone.
+#### Page-header default
+
+**Default to title-only page headers.** A page title should normally stand on its own.
+
+Do not add a subtitle, description, eyebrow, helper sentence, or explanatory copy beneath or around a page title unless the user explicitly requested it or the text communicates a concrete information need that is not already visible elsewhere.
+
+Valid reasons include a non-obvious constraint, prerequisite, scope distinction, consequence, warning, eligibility condition, meaningful current state, or guidance required to understand an unfamiliar or ambiguous workflow.
+
+Do not add supporting copy merely to make a header feel complete, create hierarchy, fill empty space, sound polished, paraphrase the title, or describe controls/content already visible on the page. Solve hierarchy with typography, spacing, alignment, grouping, and control placement before adding words.
+
+Use the removal test: if deleting the supporting text does not materially change what the user understands, decides, or does next, omit it.
+
+**When uncertain, omit the subtitle.** Supporting copy is exceptional, not a standard page-header ingredient.
+
+Apply the same restraint to section headings, card descriptions, dialog subtitles, drawer descriptions, and helper text.
 
 Read `references/interface-restraint.md` for UI bloat, excess cards/copy, dashboards, hierarchy, or scroll questions.
 
@@ -234,6 +248,7 @@ Remove task-owned debug residue and abandoned experiments. Re-read final user-fa
 
 These are SHOULD defaults, not universal laws:
 
+- default to title-only page headers; treat supporting copy as an exception that requires concrete information value;
 - prefer fewer purposeful surfaces over card-on-card composition;
 - avoid decorative copy in operational interfaces;
 - avoid many equally prominent actions;
@@ -263,6 +278,7 @@ Before finishing substantial frontend work, check the affected surface.
 - No debug/developer/internal information in normal product UI.
 - No invented production data.
 - No redundant explanation that clearer layout could replace.
+- Page headers remain title-only unless supporting copy passes the concrete-information and removal tests.
 - No page or section subtitle that merely restates a clear title or obvious surrounding context.
 
 ### Layout & Scroll
