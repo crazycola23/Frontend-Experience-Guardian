@@ -8,7 +8,7 @@ This Skill adds a product-quality review layer around frontend implementation.
 
 ## What it protects
 
-- interface restraint — visible elements must earn their place;
+- interface restraint — visible elements must earn their place, and page headers default to title-only unless supporting copy adds material information;
 - layout stability — loading, routing, resizing, sidebar and theme changes should preserve geometry;
 - scrolling quality — every independent scroll region requires a reason;
 - task efficiency — optimize real workflow cost, not screenshot aesthetics;
@@ -66,6 +66,7 @@ evals/
   loading-layout-shift.md
   responsive-instability.md
   workflow-friction.md
+  unrequested-page-subtitle.md
 CHANGELOG.md
 LICENSE
 ```
