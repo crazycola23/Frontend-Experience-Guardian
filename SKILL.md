@@ -96,6 +96,26 @@ Apply the same restraint to section headings, card descriptions, dialog subtitle
 
 Read `references/interface-restraint.md` for UI bloat, excess cards/copy, dashboards, hierarchy, or scroll questions.
 
+#### Removal is the harder half
+
+Adding requires justification. Removing something that already ships does too — it is a product decision, not a styling one, and "it looks cluttered" is never a sufficient argument.
+
+Before removing a capability:
+
+- prove it is empty in real data (null rate, single-value constants, duplicate sources), not in the type signature;
+- check whether a specification, acceptance criterion, or compliance rule mandates it — if so, surface the conflict and let the owner decide rather than deleting quietly or silently complying;
+- prefer narrowing to removing: render only the non-empty case, keep the one new clause of a warning, drop only the restatement;
+- remove the orphaned logic, styles, and imports with the markup;
+- add a negative guard that fails if the surface returns, and verify it by re-introducing the redundancy.
+
+Removing something creates no failing test, so nothing prevents a later well-intentioned change from restoring it. Record the reason where the next maintainer will look, and record the measurement the decision rested on.
+
+Some redundancy is load-bearing: mandated copy, the only statement of a consequence or irreversible effect, and dedicated diagnostic or audit surfaces are legitimate exceptions. Do not extend that exception to ordinary business pages.
+
+Prioritize removals that are actively harmful over removals that are merely untidy: copy that contradicts validation, raw internal identifiers shown as labels, and panels that can only ever render one value.
+
+Read `references/less-is-more.md` for the full removal decision procedure.
+
 ### 4. MUST preserve interface geometry across state changes
 
 Loading, routing, resizing, sidebar changes, theme changes, and data refreshes should not rebuild the application unnecessarily.
@@ -320,6 +340,7 @@ If a high-impact check fails, the task is not finished.
 Load only the relevant reference; do not read all references for every task.
 
 - `references/interface-restraint.md` — UI bloat, copy, cards, scroll, hierarchy, dashboards.
+- `references/less-is-more.md` — deciding to remove existing capability: proving emptiness, spec conflicts, narrowing before deleting, negative guards.
 - `references/layout-stability.md` — loading, refreshing, CLS, routing, sidebar, theme geometry, animation.
 - `references/product-ux.md` — workflows, tables, forms, search/filter, navigation, task efficiency.
 - `references/responsive-platform.md` — responsive layout, mobile reality, viewport/browser behavior, restoration.

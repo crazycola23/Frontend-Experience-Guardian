@@ -2,6 +2,18 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 0.3.0 — 2026-10-02
+
+### Added
+
+- Added `references/less-is-more.md`: the decision procedure for removing capability that already ships. Covers proving emptiness against real data rather than type signatures, surfacing specification conflicts instead of quietly deleting or quietly complying, preferring narrowing (render only the non-empty case, keep the irreversible-consequence clause, drop the restatement) over wholesale deletion, removing orphaned logic with the markup, and adding negative guards that are verified by re-introducing the redundancy.
+- Added `evals/capability-removal.md` to test both failure directions: deletion avoidance (keeping provably empty surfaces) and deletion overreach (removing spec-mandated copy, irreversible-effect warnings, diagnostic surfaces, or actionable empty states).
+
+### Changed
+
+- Extended Rule 3 with a "Removal is the harder half" subsection. Adding requires justification and so does removing; the section makes the asymmetry explicit and prioritizes actively harmful removals — copy that contradicts validation, raw internal identifiers presented as labels, panels that can only ever render one value — over merely untidy ones.
+- Listed the new reference in the Reference Loading index and the repository layout in `README.md`.
+
 ## 0.2.1 — 2026-09-01
 
 ### Changed

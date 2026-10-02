@@ -54,6 +54,7 @@ It also classifies findings by severity (P0–P3) and confidence (High/Medium/Lo
 SKILL.md
 references/
   interface-restraint.md
+  less-is-more.md
   layout-stability.md
   product-ux.md
   responsive-platform.md
@@ -67,6 +68,7 @@ evals/
   responsive-instability.md
   workflow-friction.md
   unrequested-page-subtitle.md
+  capability-removal.md
 CHANGELOG.md
 LICENSE
 ```
