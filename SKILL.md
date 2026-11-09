@@ -58,11 +58,11 @@ Do not silently change API behavior, permissions, authentication, billing, valid
 
 If a UX improvement requires a product decision, separate the recommendation from the safe UI implementation unless the user explicitly authorized the behavior change.
 
-### 3. MUST apply the user-facing content gate
+### 3. MUST apply the user-facing content gate & visual restraint
 
-Every visible element must earn its place.
+Every visible element and every chromatic highlight must earn its place.
 
-Before adding text, heading, description, badge, banner, tooltip, card, metric, chart, section, helper copy, placeholder, or status, ask whether the user needs it to:
+Before adding text, heading, description, badge, banner, tooltip, card, metric, chart, section, helper copy, placeholder, or status color, ask whether the user needs it to:
 
 - understand current state;
 - make a decision;
@@ -94,7 +94,15 @@ Use the removal test: if deleting the supporting text does not materially change
 
 Apply the same restraint to section headings, card descriptions, dialog subtitles, drawer descriptions, and helper text.
 
-Read `references/interface-restraint.md` for UI bloat, excess cards/copy, dashboards, hierarchy, or scroll questions.
+#### Color semantics & "Normal is Silent"
+
+- **Decouple status colors from categorical colors:** Keep status semantic colors (pass/warn/fail: green/amber/red) strictly separate from categorical chart/series palettes. Do not reuse traffic-light status colors in category breakdown bars or legends, and ensure multi-category charts (>3 series) use distinct muted multi-hue steps rather than indistinguishable single-hue opacity fades.
+- **Default to "normal is silent":** Compliant, valid, normal, or passing states should remain visually quiet (neutral text or plain subtle pills). Reserve chromatic badges and fills for warnings, exceptions, and actionable items so alerts stand out immediately.
+- **Single-duty progress bars:** Progress bars should express numeric proportion only (using a single calm neutral/brand fill). Delegate pass/fail or risk status to an independent label or icon rather than overloading the bar with both proportion and status color.
+- **Visual weight hierarchy & non-color redundancy:** Maintain a strict visual weight order (`Critical Alert > Warning > Core Metric > Categorical Chart`), unify warning hues/saturation across the app, and pair status colors with symbols or text (`×`, `!`) so color is never the sole indicator.
+- **Reject decorative thick side-borders on cards:** Avoid `border-left: 3px/4px solid ...` accent strips on rounded cards or list items, which create awkward curved corner artifacts. Use a clean `1px` full border and an internal badge or status dot instead.
+
+Read `references/interface-restraint.md` for UI bloat, excess cards/copy, color semantics, dashboards, hierarchy, or scroll questions.
 
 #### Removal is the harder half
 
@@ -128,21 +136,22 @@ Do not hide layout instability with fade, scale, slide, or delayed reveal.
 
 Read `references/layout-stability.md` for loading, routing, sidebar, theme, animation, or CLS work.
 
-### 5. MUST justify every independent scroll region
+### 5. MUST justify every independent scroll region & unify sticky boundaries
 
-A scrollbar is not automatically wrong, but every newly introduced independent scroll region is a design-review trigger.
+A scrollbar is not automatically wrong, but every newly introduced independent scroll region is a design-review trigger, and scroll behavior must be predictable across all pages in the same application.
 
 Before adding fixed height, max-height, `overflow-y: auto`, or nested scrolling, ask whether natural page growth, better composition, reduced redundant chrome, wrapping, or more effective use of width removes the need.
 
 Prefer:
 
-1. natural document/page scrolling;
-2. one intentional regional scroll area;
-3. nested scrolling only when structurally necessary.
+1. a unified scroll contract across the app (either natural page scrolling or a single explicit `Fixed Context Header + Single Scrollable Body` per workspace view);
+2. keeping navigation rails, page title/actions, filter toolbars, and detail breadcrumbs fixed outside the scroll container so context is never lost while scrolling long lists;
+3. applying sticky table headers (`position: sticky; top: 0`) consistently to full-width primary data tables that scroll vertically, while omitting them on short embedded summary tables;
+4. zero nested vertical scrollbars (`overflow-y: auto` inside `overflow-y: auto` is prohibited unless structurally unavoidable).
 
 Do not force everything into one viewport by shrinking text, touch targets, or useful spacing. Avoid artificial scrolling, not all scrolling.
 
-### 6. SHOULD optimize real task cost, not screenshot aesthetics
+### 6. SHOULD optimize real task cost, table scannability & alignment discipline
 
 Identify primary tasks and prioritize improvements by:
 
@@ -151,6 +160,13 @@ Identify primary tasks and prioritize improvements by:
 Evaluate total interaction cost: clicks, page transitions, waiting, repeated input/search, context reconstruction, decision complexity, and error risk.
 
 Make primary actions discoverable. Preserve search/filter/sort/pagination/selection/scroll context where reasonable. Keep equivalent actions predictable across similar pages.
+
+For data tables and metric lists:
+
+- **Prefer single-line atomic columns over stacked cell subtitles:** Do not stack a primary value and a muted secondary subtitle (`cell-primary` + `cell-sub`) inside every table column. Split distinct attributes into dedicated single-line columns (`one attribute per column, single-line alignment`) so rows scan cleanly along a horizontal line.
+- **Never apply `display: flex` directly to `<th>` or `<td>`:** Keep `<th>` and `<td>` as native `display: table-cell` elements with `vertical-align: middle` and `white-space: nowrap`; wrap inline badges or buttons in an inner `<div>` or `<span>` when flex alignment is needed.
+- **Align mixed-unit columns along a straight vertical axis:** When rows mix different units or prefixes (`100%`, `38.4 岁`, `24/24 人`, `要求 100%`), right-aligning the combined string creates a ragged vertical edge. Left-align on fixed grid tracks with an explicit header row, or separate the number and unit columns.
+- **Prevent 1–2 character orphan wraps:** Use `white-space: nowrap` on labels, badges, dates, IDs, and compact table cells so short text never wraps into awkward two-line fragments.
 
 Read `references/product-ux.md` for tables, forms, search/filter, navigation, dashboards, quick actions, and workflow redesign.
 
@@ -250,7 +266,7 @@ Check that shared changes did not break neighboring screens or behavior.
 When tooling permits, verify:
 
 - no unexpected console errors;
-- no unintended page-level horizontal overflow;
+- no unintended page-level or table-level horizontal overflow;
 - keyboard path remains usable;
 - focus remains visible;
 - loading → loaded does not materially jump;
@@ -270,12 +286,18 @@ These are SHOULD defaults, not universal laws:
 
 - default to title-only page headers; treat supporting copy as an exception that requires concrete information value;
 - prefer fewer purposeful surfaces over card-on-card composition;
+- avoid thick colored left borders (`border-left: 3px/4px solid`) on rounded cards;
+- keep normal/compliant states visually quiet ("normal is silent") and reserve chromatic highlights for warnings and anomalies;
+- separate status semantic colors from categorical chart palettes, and give multi-category charts distinct muted hues;
+- keep progress bars single-duty (numeric ratio only) and put status in an independent badge or icon;
+- prefer single-line atomic table columns (`one attribute per column`) over two-line stacked primary + subtitle cells;
+- never set `display: flex` directly on `<th>` or `<td>`;
 - avoid decorative copy in operational interfaces;
 - avoid many equally prominent actions;
 - use whitespace, typography, grid, and dividers before another panel;
 - avoid `transition-all` when it unintentionally animates layout geometry;
 - avoid arbitrary fixed heights;
-- prevent page-level horizontal scrolling;
+- prevent page-level and unintended table-level horizontal scrolling;
 - keep theme changes focused on appearance rather than geometry;
 - prefer semantic design tokens over hard-coded UI-theme colors;
 - prefer recognition over recall;
@@ -293,18 +315,22 @@ Before finishing substantial frontend work, check the affected surface.
 - Intended task still works.
 - Business rules and data semantics are preserved.
 
-### Content
+### Content & Visual Restraint
 - No unnecessary agent-generated UI copy.
 - No debug/developer/internal information in normal product UI.
 - No invented production data.
 - No redundant explanation that clearer layout could replace.
 - Page headers remain title-only unless supporting copy passes the concrete-information and removal tests.
 - No page or section subtitle that merely restates a clear title or obvious surrounding context.
+- Normal/passing states are not over-colored; status colors and categorical chart colors do not collide.
+- No thick colored left-border accent strips on rounded cards.
 
-### Layout & Scroll
+### Layout, Alignment & Scroll
 - Alignment, spacing, content width, and page padding are intentional.
-- No unexplained page-level horizontal overflow.
-- Every new independent scroll region has a concrete reason.
+- Mixed-unit metric lists and table columns align on clean vertical axes without ragged edges or 1–2 character orphan wraps.
+- Data tables use single-line atomic columns without stacked primary+subtitle clutter or `display: flex` directly on `<td>`/`<th>`.
+- No unexplained page-level or table-level horizontal overflow.
+- Scroll container boundaries and sticky table headers follow one consistent rule across the app with zero nested vertical scrollbars.
 - No arbitrary fixed-height workaround when natural layout is better.
 
 ### Stability
@@ -314,6 +340,7 @@ Before finishing substantial frontend work, check the affected surface.
 
 ### Readability & Accessibility
 - Text remains readable in affected themes/states.
+- Status indicators include non-color cues (text/symbols) alongside color.
 - Focus is visible.
 - Keyboard/touch operation remains practical.
 - No essential interaction exists only on hover.
@@ -339,10 +366,10 @@ If a high-impact check fails, the task is not finished.
 
 Load only the relevant reference; do not read all references for every task.
 
-- `references/interface-restraint.md` — UI bloat, copy, cards, scroll, hierarchy, dashboards.
+- `references/interface-restraint.md` — UI bloat, copy, cards, color semantics, borders, scroll architecture, hierarchy, dashboards.
 - `references/less-is-more.md` — deciding to remove existing capability: proving emptiness, spec conflicts, narrowing before deleting, negative guards.
 - `references/layout-stability.md` — loading, refreshing, CLS, routing, sidebar, theme geometry, animation.
-- `references/product-ux.md` — workflows, tables, forms, search/filter, navigation, task efficiency.
+- `references/product-ux.md` — workflows, single-line atomic tables, column alignment, forms, search/filter, navigation, task efficiency.
 - `references/responsive-platform.md` — responsive layout, mobile reality, viewport/browser behavior, restoration.
 - `references/accessibility-i18n.md` — keyboard, focus, contrast, zoom, preferences, localization, RTL.
 - `references/finalization.md` — accepted-state delivery, naming, comments, commits, PRs, handoffs.

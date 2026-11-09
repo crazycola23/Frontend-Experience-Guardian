@@ -1,6 +1,6 @@
 # Product UX and Task Efficiency
 
-Use this reference for workflows, navigation, tables, forms, settings, search/filter, dashboards, quick actions, and learning-cost reduction.
+Use this reference for workflows, navigation, tables, column alignment, forms, settings, search/filter, dashboards, quick actions, and learning-cost reduction.
 
 ## Start with the task
 
@@ -32,13 +32,31 @@ Users should understand what is being searched, which filters are active, why re
 
 Keep important active filters visible rather than hiding all state inside a closed filter panel.
 
-## Tables and lists
+## Tables, lists & strict alignment discipline
 
 Inspect column priority, width, density, row actions, bulk actions, sort, filters, search, pagination, selection, and responsive overflow.
 
-Avoid a row containing many equally prominent buttons. Usually expose one or two frequent actions and place lower-frequency actions in More.
+### 1. Single-line atomic columns (No stacked cell subtitles)
 
-If users repeatedly enter a detail page only to inspect status, copy a value, toggle one field, or read brief metadata, consider Quick View, Sheet, Popover, Inline Edit, or Row Action.
+- **Avoid stacking primary + subtitle lines inside table cells:** Putting two lines of text (`cell-primary` on top + muted `cell-sub` underneath) inside multiple columns of a table row creates visual clutter, inflates row height, and breaks horizontal eye scanning.
+- **One attribute per column, single-line alignment (`一列一事，单行对齐`):** Split distinct attributes that users actually scan or filter by (e.g., Archive ID, Name, Gender/Age, Role/Category, Specialty/Diagnosis, Certificate/Mode, Duration, Expiry Date, Location) into dedicated atomic columns on a single horizontal line.
+- Reserve multi-attribute detail for the detail view, drawer, or quick view rather than cramming secondary subtitles under every cell.
+
+### 2. Native table-cell display invariant
+
+- **Never apply `display: flex` or `display: inline-flex` directly to a `<th>` or `<td>` element.** Overriding `display: table-cell` breaks table column sizing and `vertical-align: middle`, causing text in that cell to jump to the top edge of the row while neighboring cells stay middle-aligned.
+- Always keep `<th>` and `<td>` as native `table-cell` elements with `vertical-align: middle` and `white-space: nowrap`. When flex layout is needed for an inline badge or action group, place an inner `<div class="cell-inline">` inside the `<td>`.
+
+### 3. Mixed-unit column alignment & orphan-wrap prevention
+
+- **Avoid ragged right-aligned mixed-unit strings:** When a metric list or table column mixes values with different Chinese/English unit suffixes or prefixes (`100%`, `38.4 岁`, `6 人`, `24/24 人`, `要求 100%`, `不低于 60%`), right-aligning the whole string causes both the numbers and the leading characters to stagger irregularly.
+- **Align along a strict vertical axis:** Give structured metric rows an explicit header row (`项目 | 进度 | 当前数值 | 标准 | 状态`) and left-align mixed-unit value/requirement columns on fixed grid tracks (or split the number and unit sub-columns) so every row starts on the exact same vertical line.
+- **Eliminate 1–2 character orphan wraps:** Set `white-space: nowrap` on table cells, metric titles, status pills, dates, and archive codes so a label never wraps its last 1–2 characters onto a second line.
+
+### 4. Row actions
+
+- Avoid a row containing many equally prominent buttons or overflowing the table width. Expose one or two high-frequency actions (e.g., `查看`, `打印`) that fit cleanly within the viewport without horizontal clipping, and move low-frequency or destructive actions (`删除`) to the detail view or a secondary menu.
+- If users repeatedly enter a detail page only to inspect status, copy a value, toggle one field, or read brief metadata, consider Quick View, Sheet, Popover, Inline Edit, or Row Action.
 
 ## Interaction-container defaults
 

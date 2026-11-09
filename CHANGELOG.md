@@ -2,6 +2,25 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 0.4.0 — 2026-11-09
+
+### Added
+
+- Added **Color semantics & "Normal is Silent"** guardrails to `SKILL.md` (Rule 3) and `references/interface-restraint.md`:
+  - Decouple traffic-light status semantic colors (green/amber/red) from categorical chart/series palettes, and require distinct muted multi-hue palettes for multi-category charts (>3 series) rather than indistinguishable single-hue opacity steps.
+  - Default to "normal is silent": compliant, valid, or passing items remain visually neutral rather than flooding operational screens with green badges and green progress bars.
+  - Keep progress bars single-duty (numeric ratio only) and delegate pass/fail or risk status to an independent badge or icon.
+  - Enforce a visual weight hierarchy (`Critical Alert > Warning > Core Metric > Categorical Chart`) with unified warning hues and non-color accessibility cues (`×`, `!`).
+- Added **Card & border restraint** to `SKILL.md` and `references/interface-restraint.md`: prohibit thick colored left borders (`border-left: 3px/4px solid`) on rounded cards and list items that create curved corner artifacts.
+- Added **Single-line atomic table columns & strict alignment discipline** to `SKILL.md` (Rule 6) and `references/product-ux.md`:
+  - Prefer single-line atomic columns (`one attribute per column, single-line alignment`) over stacking a primary value and a muted subtitle (`cell-primary` + `cell-sub`) inside table cells.
+  - Prohibit applying `display: flex` directly to `<th>` or `<td>` elements so native `display: table-cell` and `vertical-align: middle` invariants are preserved.
+  - Align mixed-unit metric lists and columns along a straight vertical axis with explicit headers, and prevent 1–2 character orphan wraps (`white-space: nowrap`).
+
+### Changed
+
+- Expanded Rule 5 (`MUST justify every independent scroll region & unify sticky boundaries`) and `references/interface-restraint.md` with an explicit application-wide scroll contract: fixed context headers/toolbars outside the scroll container, consistent `position: sticky; top: 0` criteria for full-width primary data tables, and zero nested vertical scrollbars.
+
 ## 0.3.0 — 2026-10-02
 
 ### Added
