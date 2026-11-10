@@ -77,6 +77,24 @@ Color in operational interfaces must have stable meaning and clear visual priori
    - Keep general warnings (expiring soon, pending attachment, under review) on one consistent amber/ochre hue and saturation family across the entire product rather than mixing random yellows and oranges.
    - Pair status colors with non-color cues (`×` for critical/error, `!` for warning, explicit text labels) to support accessibility and rapid scanning.
 
+## Compensatory structural & surface hierarchy (Preventing flat white-on-white pages)
+
+When you strip away decorative colors and practice "Normal is Silent", **you MUST compensate with structural surface depth and typographic contrast**. Otherwise, the page collapses into a flat, monotonous sheet of identical text where the eye has no natural entry point or scanning rhythm ("视觉层级缺失").
+
+1. **Three-layer surface luminance hierarchy (`Canvas → Elevated Surface → Tinted Header/Control Band`):**
+   - **Layer 0 — Recessed Workspace Canvas** (e.g. `#F2F5F7` or `#F4F6F8`): Use a cool-neutral recessed background for the scrolling workspace canvas so primary content blocks do not float in undifferentiated white space.
+   - **Layer 1 — Elevated Primary Surface** (`#FFFFFF` with `1px solid` border and subtle ambient shadow `0 1px 3px rgba(15, 23, 42, 0.04)`): Use pure white for primary operational tables, KPI summary strips, and inspection cards so they lift clearly off the canvas.
+   - **Layer 2 — Tinted Header / Control Band** (e.g. `#EDF2F4` or `#F8FAFB` with stronger bottom border): Use a distinct tinted band for sticky table headers (`<thead>`), filter toolbars, and card section headers so data boundaries are unmistakable at a glance.
+
+2. **Three-tier typographic & structural content hierarchy:**
+   - **Tier 1 — Focal Anchor (视觉锚点):**
+     - On dashboards/overviews: provide a compact top summary strip (e.g. 4 actionable KPI cards with `24px–28px` bold tabular numerals and interactive drill-down affordance) that anchors the eye immediately before detailed lists.
+     - In tables and rosters: render the primary entity identifier (e.g. Person Name, Subject Title) in `13.5px–14px` bold (`font-weight: 600–700`) high-contrast ink (`#142029`).
+   - **Tier 2 — Structural Taxonomy (结构化分类胶囊):**
+     - Even when status is normal ("Normal is Silent"), key categorical dimensions (Role, Disability Level, Service Mode, Department) should not all be bare uniform text. Wrap primary classification attributes in quiet, neutral structural chips (`.struct-tag`: `#F1F5F8` background, `#D5E0E6` border, `#2C424E` text) while keeping chromatic pills strictly for anomalies and warnings.
+   - **Tier 3 — Recessed Metadata (退后辅助元数据):**
+     - Render archive codes, serial numbers, timestamps, and unit suffixes in smaller (`12px`), muted (`#6E808C`) monospace/tabular type (`font-variant-numeric: tabular-nums`) so they never compete with Tier 1 names or Tier 2 classifications.
+
 ## Operational space
 
 SaaS/admin/workspace screens are not marketing landing pages. Avoid pushing the primary task below the fold with oversized headings, decorative hero regions, huge gaps, repeated descriptions, or oversized cards.

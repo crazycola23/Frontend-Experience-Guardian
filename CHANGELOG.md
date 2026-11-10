@@ -2,6 +2,18 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 0.5.0 — 2026-11-10
+
+### Added
+
+- Added **Compensatory structural & surface hierarchy (Preventing flat white-on-white pages)** to `SKILL.md` (Rule 3) and `references/interface-restraint.md`:
+  - Enforce a three-layer surface luminance hierarchy (`Recessed Workspace Canvas #F2F5F7 → Elevated Primary Surface #FFFFFF → Tinted Sticky Header / Filter Control Band #EDF2F4`) so color restraint ("Normal is Silent") never collapses into a flat, undifferentiated white-on-white sheet ("视觉层级缺失").
+  - Enforce a three-tier typographic & structural content hierarchy: Tier 1 Focal Anchor (top actionable KPI summary strip & bold entity names), Tier 2 Structural Taxonomy (neutral structural chips `.struct-tag` for key classification dimensions while keeping chromatic pills strictly for anomalies), and Tier 3 Recessed Metadata (muted tabular numerals for IDs, codes, and timestamps).
+- Added **Closed-loop navigation & eliminating page islands** to `SKILL.md` (Rule 6) and `references/product-ux.md`:
+  - Maintain a live location breadcrumb trail and navigation history stack in the application shell.
+  - Require interactive dashboard drill-downs to display a removable **Drill-Down Context Banner** (`当前正查看由「...」穿透筛选的记录 · [← 返回原视图] [查看全部]`) in the target list view.
+  - Require detail views to provide an **origin-aware Back button** (dynamically restoring the actual caller — Dashboard, Audit Log, or related entity detail — rather than a hardcoded list path), **bidirectional cross-entity jump links/chips**, and **in-detail `Prev / Next` (`上一份 / 下一份`) sequential stepping**.
+
 ## 0.4.0 — 2026-11-09
 
 ### Added

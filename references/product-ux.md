@@ -92,11 +92,25 @@ Errors should say what happened, why when known, and what the user can do next.
 
 Low-risk reversible actions may benefit from Undo rather than repeated confirmation. High-risk irreversible actions still need explicit safeguards.
 
-## Navigation
+## Closed-loop navigation & eliminating page islands
 
-Organize around user mental models and actual workflows, not internal code/database organization when those differ.
+Never build multi-view operational applications as disconnected "page islands" (`页面孤岛`) where jumping from a dashboard, alert, or related entity drops the user into a screen with no memory of how they got there, no way to return to their actual origin, and no way to step through sibling or related records.
 
-Use global navigation for major product areas and local tabs/sub-navigation for the current area. Avoid excessive menu depth.
+1. **Persistent location breadcrumb & navigation history stack:**
+   - Maintain an explicit navigation history stack in the application shell when users traverse across views or entities (`Dashboard → Filtered List → Entity A Detail → Related Entity B Detail`).
+   - Display a live, clickable breadcrumb trail in the global top bar (`Overview / Module / Current Entity`) alongside a context-aware `← Back` trigger so users always know their exact position and origin.
+
+2. **Interactive dashboard drill-down with origin context banner:**
+   - Dashboard KPI cards, compliance indicators, and category distribution rows should act as interactive entry points that drill down into the corresponding list view with filters pre-applied.
+   - When a list view is entered via a drill-down, display a prominent, removable **Drill-Down Context Banner** (`当前正查看由「概览工作台 · ...」穿透筛选的记录 · [← 返回概览工作台] [查看全部记录]`) so the user understands why the list is filtered and can return to the dashboard in one click.
+
+3. **Origin-aware Back button (no hardcoded return paths):**
+   - Detail views must not hardcode their back button to "Back to List" when the user actually arrived from a Dashboard alert, an Audit Log entry, or another entity's detail page.
+   - Dynamically label and wire the primary return button to restore the exact caller (`← 返回概览工作台`, `← 返回执业医师：王宏博`, `← 返回调阅登记簿`) while preserving the caller's filters and pagination state.
+
+4. **Bidirectional cross-entity linking & in-detail `Prev / Next` stepping:**
+   - When entities reference each other (e.g. a Medical Staff archive is assigned to several Disabled Clients, and a Disabled Client record lists their Responsible Doctor, Nurse, and Caregiver), render those references as interactive jump links/chips in both directions rather than dead plain text.
+   - Provide `第 k / N 份 · [‹ 上一份] [下一份 ›]` sequential stepping controls directly inside the detail view's sticky header so auditors and operators can inspect consecutive records without repeatedly bouncing back to the list table.
 
 ## Dashboard
 

@@ -94,15 +94,16 @@ Use the removal test: if deleting the supporting text does not materially change
 
 Apply the same restraint to section headings, card descriptions, dialog subtitles, drawer descriptions, and helper text.
 
-#### Color semantics & "Normal is Silent"
+#### Color semantics, "Normal is Silent" & compensatory visual hierarchy
 
 - **Decouple status colors from categorical colors:** Keep status semantic colors (pass/warn/fail: green/amber/red) strictly separate from categorical chart/series palettes. Do not reuse traffic-light status colors in category breakdown bars or legends, and ensure multi-category charts (>3 series) use distinct muted multi-hue steps rather than indistinguishable single-hue opacity fades.
 - **Default to "normal is silent":** Compliant, valid, normal, or passing states should remain visually quiet (neutral text or plain subtle pills). Reserve chromatic badges and fills for warnings, exceptions, and actionable items so alerts stand out immediately.
+- **Compensate color restraint with 3-layer surface & 3-tier typographic hierarchy:** Never let color subtraction flatten a page into uniform white-on-white blocks with identical font weights. Establish clear figure-ground contrast (`Recessed Workspace Canvas` → `Elevated Pure-White Card/Table Surface` → `Tinted Sticky Header / Filter Control Band`) and a 3-tier content hierarchy (`Tier 1 Focal Anchor: KPI hero numbers & bold entity names` → `Tier 2 Structural Taxonomy: neutral structural chips for roles/categories + chromatic badges strictly for anomalies` → `Tier 3 Recessed Metadata: smaller muted tabular numerals for IDs/codes/dates`).
 - **Single-duty progress bars:** Progress bars should express numeric proportion only (using a single calm neutral/brand fill). Delegate pass/fail or risk status to an independent label or icon rather than overloading the bar with both proportion and status color.
 - **Visual weight hierarchy & non-color redundancy:** Maintain a strict visual weight order (`Critical Alert > Warning > Core Metric > Categorical Chart`), unify warning hues/saturation across the app, and pair status colors with symbols or text (`×`, `!`) so color is never the sole indicator.
 - **Reject decorative thick side-borders on cards:** Avoid `border-left: 3px/4px solid ...` accent strips on rounded cards or list items, which create awkward curved corner artifacts. Use a clean `1px` full border and an internal badge or status dot instead.
 
-Read `references/interface-restraint.md` for UI bloat, excess cards/copy, color semantics, dashboards, hierarchy, or scroll questions.
+Read `references/interface-restraint.md` for UI bloat, excess cards/copy, color semantics, surface hierarchy, dashboards, or scroll questions.
 
 #### Removal is the harder half
 
@@ -134,7 +135,7 @@ Distinguish initial loading from refreshing. Once real data is visible, prefer p
 
 Do not hide layout instability with fade, scale, slide, or delayed reveal.
 
-Read `references/layout-stability.md` for loading, routing, sidebar, theme, animation, or CLS work.
+Read `references/layout-stability.md` for loading, routing, sidebar, theme, pagination column locks, non-fullscreen window contraction, animation, or CLS work.
 
 ### 5. MUST justify every independent scroll region & unify sticky boundaries
 
@@ -144,14 +145,14 @@ Before adding fixed height, max-height, `overflow-y: auto`, or nested scrolling,
 
 Prefer:
 
-1. a unified scroll contract across the app (either natural page scrolling or a single explicit `Fixed Context Header + Single Scrollable Body` per workspace view);
-2. keeping navigation rails, page title/actions, filter toolbars, and detail breadcrumbs fixed outside the scroll container so context is never lost while scrolling long lists;
+1. a unified scroll contract across the app (either natural page scrolling or a single explicit `Fixed Context Header + Single Scrollable Body + Fixed Pagination Footer` per workspace view);
+2. keeping navigation rails, page title/actions, filter toolbars, detail breadcrumbs, and pagination bars fixed outside the scroll container so context is never lost while scrolling long lists;
 3. applying sticky table headers (`position: sticky; top: 0`) consistently to full-width primary data tables that scroll vertically, while omitting them on short embedded summary tables;
 4. zero nested vertical scrollbars (`overflow-y: auto` inside `overflow-y: auto` is prohibited unless structurally unavoidable).
 
 Do not force everything into one viewport by shrinking text, touch targets, or useful spacing. Avoid artificial scrolling, not all scrolling.
 
-### 6. SHOULD optimize real task cost, table scannability & alignment discipline
+### 6. SHOULD optimize real task cost, closed-loop navigation, table scannability & alignment discipline
 
 Identify primary tasks and prioritize improvements by:
 
@@ -161,6 +162,13 @@ Evaluate total interaction cost: clicks, page transitions, waiting, repeated inp
 
 Make primary actions discoverable. Preserve search/filter/sort/pagination/selection/scroll context where reasonable. Keep equivalent actions predictable across similar pages.
 
+For multi-view navigation and entity relationships (**No Page Islands / Closed-Loop Navigation**):
+
+- **Persistent location breadcrumb & history stack:** Maintain a live navigation history stack and render an interactive breadcrumb trail (`Scope / Module / Current Entity or Filter`) in the shell topbar/header so users never lose spatial context.
+- **Interactive dashboard drill-down with origin context banner:** Overview KPI cards, category bars, and compliance rows should drill down into target lists with filters pre-applied, and the target list must render a removable **Drill-Down Context Banner** (`当前由「...」穿透筛选 · [← 返回概览] [查看全部]`).
+- **Origin-aware back navigation:** Never hardcode generic `返回列表` on detail pages when entered from an overview alert, audit log, global search, or a related entity. Dynamically display and restore the actual caller (`← 返回概览工作台`, `← 返回调阅登记簿`, `← 返回关联实体档案`).
+- **Bidirectional cross-entity linking & sequential stepping:** Render foreign-key domain references (e.g., `Doctor ⇄ Patient`, `Staff ⇄ Assigned Clients`, `Log ⇄ Target Archive`) as interactive jump chips rather than dead plain text, and provide `上一份 / 下一份` (`Prev / Next` with `k / N` position indicator) in detail headers so users can review adjacent records without pogo-sticking (`列表 ↔ 详情`).
+
 For data tables and metric lists:
 
 - **Prefer single-line atomic columns over stacked cell subtitles:** Do not stack a primary value and a muted secondary subtitle (`cell-primary` + `cell-sub`) inside every table column. Split distinct attributes into dedicated single-line columns (`one attribute per column, single-line alignment`) so rows scan cleanly along a horizontal line.
@@ -168,7 +176,7 @@ For data tables and metric lists:
 - **Align mixed-unit columns along a straight vertical axis:** When rows mix different units or prefixes (`100%`, `38.4 岁`, `24/24 人`, `要求 100%`), right-aligning the combined string creates a ragged vertical edge. Left-align on fixed grid tracks with an explicit header row, or separate the number and unit columns.
 - **Prevent 1–2 character orphan wraps:** Use `white-space: nowrap` on labels, badges, dates, IDs, and compact table cells so short text never wraps into awkward two-line fragments.
 
-Read `references/product-ux.md` for tables, forms, search/filter, navigation, dashboards, quick actions, and workflow redesign.
+Read `references/product-ux.md` for tables, forms, search/filter, closed-loop navigation, dashboards, quick actions, and workflow redesign.
 
 ### 7. SHOULD fix systems before symptoms
 
@@ -285,13 +293,17 @@ Remove task-owned debug residue and abandoned experiments. Re-read final user-fa
 These are SHOULD defaults, not universal laws:
 
 - default to title-only page headers; treat supporting copy as an exception that requires concrete information value;
-- prefer fewer purposeful surfaces over card-on-card composition;
+- prefer fewer purposeful surfaces over card-on-card composition, while maintaining clear figure-ground contrast between the workspace canvas (`--canvas`) and elevated cards/tables (`--surface`);
 - avoid thick colored left borders (`border-left: 3px/4px solid`) on rounded cards;
 - keep normal/compliant states visually quiet ("normal is silent") and reserve chromatic highlights for warnings and anomalies;
+- compensate color restraint with 3-tier typographic & structural hierarchy (hero KPI numbers, bold entity anchors, neutral structural category chips, recessed tabular metadata);
 - separate status semantic colors from categorical chart palettes, and give multi-category charts distinct muted hues;
 - keep progress bars single-duty (numeric ratio only) and put status in an independent badge or icon;
+- close every navigation loop: maintain topbar location breadcrumbs, show drill-down origin banners on filtered lists, make detail back buttons origin-aware, link related entities bidirectionally, and provide `Prev / Next` record stepping in detail views;
 - prefer single-line atomic table columns (`one attribute per column`) over two-line stacked primary + subtitle cells;
 - never set `display: flex` directly on `<th>` or `<td>`;
+- lock data table column geometry with `table-layout: fixed` and `<colgroup>` so pagination and filtering never cause horizontal column jitter;
+- use `minmax(0, 1fr)` and `min-width: 0; min-height: 0` on CSS Grid app shells so non-fullscreen windows never clip bottom-right controls;
 - avoid decorative copy in operational interfaces;
 - avoid many equally prominent actions;
 - use whitespace, typography, grid, and dividers before another panel;
@@ -315,7 +327,7 @@ Before finishing substantial frontend work, check the affected surface.
 - Intended task still works.
 - Business rules and data semantics are preserved.
 
-### Content & Visual Restraint
+### Content, Visual Hierarchy & Restraint
 - No unnecessary agent-generated UI copy.
 - No debug/developer/internal information in normal product UI.
 - No invented production data.
@@ -323,12 +335,14 @@ Before finishing substantial frontend work, check the affected surface.
 - Page headers remain title-only unless supporting copy passes the concrete-information and removal tests.
 - No page or section subtitle that merely restates a clear title or obvious surrounding context.
 - Normal/passing states are not over-colored; status colors and categorical chart colors do not collide.
+- Color subtraction is compensated by clear surface elevation (`Canvas → Card/Table → Header/Control Well`) and 3-tier typographic weight hierarchy (never a flat white-on-white sheet).
 - No thick colored left-border accent strips on rounded cards.
 
 ### Layout, Alignment & Scroll
 - Alignment, spacing, content width, and page padding are intentional.
 - Mixed-unit metric lists and table columns align on clean vertical axes without ragged edges or 1–2 character orphan wraps.
-- Data tables use single-line atomic columns without stacked primary+subtitle clutter or `display: flex` directly on `<td>`/`<th>`.
+- Data tables use single-line atomic columns (`table-layout: fixed` + `<colgroup>`) without stacked primary+subtitle clutter, `display: flex` directly on `<td>`/`<th>`, or cross-page column jitter.
+- Non-fullscreen windows contract cleanly (`minmax(0, 1fr)`) without clipping rightmost action columns or bottom-right pagination controls.
 - No unexplained page-level or table-level horizontal overflow.
 - Scroll container boundaries and sticky table headers follow one consistent rule across the app with zero nested vertical scrollbars.
 - No arbitrary fixed-height workaround when natural layout is better.
@@ -345,9 +359,10 @@ Before finishing substantial frontend work, check the affected surface.
 - Keyboard/touch operation remains practical.
 - No essential interaction exists only on hover.
 
-### UX
+### UX & Navigation Closed-Loop
 - Primary action is discoverable.
 - High-frequency work is not needlessly indirect.
+- No isolated "page islands": breadcrumb location context is visible, dashboard drill-downs show an origin context banner with one-click return, detail back buttons restore the actual caller, related domain entities link bidirectionally, and detail views support sequential `Prev / Next` stepping.
 - User context is preserved where practical.
 - Feedback and recovery are understandable.
 
@@ -366,10 +381,10 @@ If a high-impact check fails, the task is not finished.
 
 Load only the relevant reference; do not read all references for every task.
 
-- `references/interface-restraint.md` — UI bloat, copy, cards, color semantics, borders, scroll architecture, hierarchy, dashboards.
+- `references/interface-restraint.md` — UI bloat, copy, cards, color semantics, compensatory surface/typographic hierarchy, borders, scroll architecture, dashboards.
 - `references/less-is-more.md` — deciding to remove existing capability: proving emptiness, spec conflicts, narrowing before deleting, negative guards.
-- `references/layout-stability.md` — loading, refreshing, CLS, routing, sidebar, theme geometry, animation.
-- `references/product-ux.md` — workflows, single-line atomic tables, column alignment, forms, search/filter, navigation, task efficiency.
+- `references/layout-stability.md` — loading, refreshing, CLS, routing, sidebar, theme geometry, pagination column lock, non-fullscreen grid contraction, animation.
+- `references/product-ux.md` — workflows, closed-loop navigation, anti-page-island patterns, single-line atomic tables, column alignment, forms, search/filter, task efficiency.
 - `references/responsive-platform.md` — responsive layout, mobile reality, viewport/browser behavior, restoration.
 - `references/accessibility-i18n.md` — keyboard, focus, contrast, zoom, preferences, localization, RTL.
 - `references/finalization.md` — accepted-state delivery, naming, comments, commits, PRs, handoffs.
