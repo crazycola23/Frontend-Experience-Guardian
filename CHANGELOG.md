@@ -2,6 +2,14 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 0.5.1 — 2026-11-10
+
+### Added
+
+- Added **Viewport-filling pagination defaults & total-count clarity** and **Quiet per-row action restraint** to `SKILL.md` (Rule 6) and `references/product-ux.md`:
+  - Avoid tiny default page sizes (`5` or `8` rows/page) on primary operational tables that leave half the viewport blank and mislead users into thinking the partial page is the entire dataset. Default to a viewport-filling page size (`20` rows/page for single-line atomic rows) paired with an explicit `共 N 条 · 第 a–b 条` readout and a `10 / 20 / 50` page-size selector.
+  - Keep repeated per-row action buttons borderless at rest (revealing their border/surface on row `:hover` or `:focus-visible`) so 20-row tables do not stack dozens of heavy button boxes down the right edge.
+
 ## 0.5.0 — 2026-11-10
 
 ### Added
@@ -78,8 +86,3 @@ All notable changes to Frontend Experience Guardian are documented here.
 - README with project positioning and usage model.
 - MIT License.
 - Six focused reference documents.
-- Five benchmark-style eval scenarios.
-
-## 0.1.0 — 2026-08-24
-
-- Initial single-file Frontend Experience Guardian Skill.

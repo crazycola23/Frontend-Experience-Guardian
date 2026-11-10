@@ -1,6 +1,6 @@
 # Product UX and Task Efficiency
 
-Use this reference for workflows, navigation, tables, column alignment, forms, settings, search/filter, dashboards, quick actions, and learning-cost reduction.
+Use this reference for workflows, navigation, tables, column alignment, pagination density, forms, settings, search/filter, dashboards, quick actions, and learning-cost reduction.
 
 ## Start with the task
 
@@ -53,10 +53,17 @@ Inspect column priority, width, density, row actions, bulk actions, sort, filter
 - **Align along a strict vertical axis:** Give structured metric rows an explicit header row (`项目 | 进度 | 当前数值 | 标准 | 状态`) and left-align mixed-unit value/requirement columns on fixed grid tracks (or split the number and unit sub-columns) so every row starts on the exact same vertical line.
 - **Eliminate 1–2 character orphan wraps:** Set `white-space: nowrap` on table cells, metric titles, status pills, dates, and archive codes so a label never wraps its last 1–2 characters onto a second line.
 
-### 4. Row actions
+### 4. Row actions & visual restraint
 
 - Avoid a row containing many equally prominent buttons or overflowing the table width. Expose one or two high-frequency actions (e.g., `查看`, `打印`) that fit cleanly within the viewport without horizontal clipping, and move low-frequency or destructive actions (`删除`) to the detail view or a secondary menu.
+- **Keep per-row secondary action buttons visually quiet at rest:** In dense tables (15–20+ rows), rendering bordered button boxes (`border: 1px solid`) on every row creates a heavy vertical column of button chrome that competes with data and status alerts. Render row action buttons as borderless text/icon buttons at rest (`border-color: transparent; background: transparent; color: var(--muted)`) and reveal their border/surface on row `:hover` or keyboard `:focus-visible`. Note that the action labels and icons remain visible at all times so accessibility and discoverability are never compromised.
 - If users repeatedly enter a detail page only to inspect status, copy a value, toggle one field, or read brief metadata, consider Quick View, Sheet, Popover, Inline Edit, or Row Action.
+
+### 5. Viewport-filling pagination defaults & total-count clarity
+
+- **Do not default primary data tables to tiny page sizes (`5` or `8` rows/page):** When a full-screen or desktop table only renders 8 rows and leaves the bottom half of the table viewport empty white space, users frequently misinterpret the partially filled viewport as the entire dataset ("thinking there are only 8 records in total").
+- **Default to a viewport-filling page size (`20` rows/page for standard 40–44px single-line rows):** Ensure the default page size fills a standard desktop viewport within the single scroll body while keeping `thead` sticky at the top and the pagination bar pinned at the bottom.
+- **Always pair pagination with an explicit total & range readout (`共 N 条 · 第 a–b 条`) and a page-size selector (`10 / 20 / 50 条/页`):** Make total dataset size unmistakable at a glance without repeating the same total count in multiple adjacent headers or toolbars.
 
 ## Interaction-container defaults
 
@@ -102,7 +109,7 @@ Never build multi-view operational applications as disconnected "page islands" (
 
 2. **Interactive dashboard drill-down with origin context banner:**
    - Dashboard KPI cards, compliance indicators, and category distribution rows should act as interactive entry points that drill down into the corresponding list view with filters pre-applied.
-   - When a list view is entered via a drill-down, display a prominent, removable **Drill-Down Context Banner** (`当前正查看由「概览工作台 · ...」穿透筛选的记录 · [← 返回概览工作台] [查看全部记录]`) so the user understands why the list is filtered and can return to the dashboard in one click.
+   - When a list view is entered via a drill-down, display a prominent, removable **Drill-Down Context Banner** (`概览穿透 · <筛选条件> · N 人 · [← 返回概览工作台] [查看全部记录]`) so the user understands why the list is filtered and can return to the dashboard in one click.
 
 3. **Origin-aware Back button (no hardcoded return paths):**
    - Detail views must not hardcode their back button to "Back to List" when the user actually arrived from a Dashboard alert, an Audit Log entry, or another entity's detail page.

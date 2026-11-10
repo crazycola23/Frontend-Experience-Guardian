@@ -165,7 +165,7 @@ Make primary actions discoverable. Preserve search/filter/sort/pagination/select
 For multi-view navigation and entity relationships (**No Page Islands / Closed-Loop Navigation**):
 
 - **Persistent location breadcrumb & history stack:** Maintain a live navigation history stack and render an interactive breadcrumb trail (`Scope / Module / Current Entity or Filter`) in the shell topbar/header so users never lose spatial context.
-- **Interactive dashboard drill-down with origin context banner:** Overview KPI cards, category bars, and compliance rows should drill down into target lists with filters pre-applied, and the target list must render a removable **Drill-Down Context Banner** (`当前由「...」穿透筛选 · [← 返回概览] [查看全部]`).
+- **Interactive dashboard drill-down with origin context banner:** Overview KPI cards, category bars, and compliance rows should drill down into target lists with filters pre-applied, and the target list must render a removable **Drill-Down Context Banner** (`概览穿透 · <筛选条件> · [← 返回概览] [查看全部]`).
 - **Origin-aware back navigation:** Never hardcode generic `返回列表` on detail pages when entered from an overview alert, audit log, global search, or a related entity. Dynamically display and restore the actual caller (`← 返回概览工作台`, `← 返回调阅登记簿`, `← 返回关联实体档案`).
 - **Bidirectional cross-entity linking & sequential stepping:** Render foreign-key domain references (e.g., `Doctor ⇄ Patient`, `Staff ⇄ Assigned Clients`, `Log ⇄ Target Archive`) as interactive jump chips rather than dead plain text, and provide `上一份 / 下一份` (`Prev / Next` with `k / N` position indicator) in detail headers so users can review adjacent records without pogo-sticking (`列表 ↔ 详情`).
 
@@ -175,8 +175,9 @@ For data tables and metric lists:
 - **Never apply `display: flex` directly to `<th>` or `<td>`:** Keep `<th>` and `<td>` as native `display: table-cell` elements with `vertical-align: middle` and `white-space: nowrap`; wrap inline badges or buttons in an inner `<div>` or `<span>` when flex alignment is needed.
 - **Align mixed-unit columns along a straight vertical axis:** When rows mix different units or prefixes (`100%`, `38.4 岁`, `24/24 人`, `要求 100%`), right-aligning the combined string creates a ragged vertical edge. Left-align on fixed grid tracks with an explicit header row, or separate the number and unit columns.
 - **Prevent 1–2 character orphan wraps:** Use `white-space: nowrap` on labels, badges, dates, IDs, and compact table cells so short text never wraps into awkward two-line fragments.
+- **Default to viewport-filling pagination (`20` rows/page) with explicit total & range readout (`共 N 条 · 第 a–b 条`):** Avoid tiny page sizes (`5` or `8` rows/page) that leave half the table viewport blank and mislead users into thinking the partial page is the entire dataset. Keep per-row secondary action buttons borderless at rest (revealing their border on row `:hover` or `:focus-visible`) so 20-row tables do not stack heavy button chrome down the right edge.
 
-Read `references/product-ux.md` for tables, forms, search/filter, closed-loop navigation, dashboards, quick actions, and workflow redesign.
+Read `references/product-ux.md` for tables, forms, search/filter, closed-loop navigation, pagination density, dashboards, quick actions, and workflow redesign.
 
 ### 7. SHOULD fix systems before symptoms
 
@@ -303,6 +304,7 @@ These are SHOULD defaults, not universal laws:
 - prefer single-line atomic table columns (`one attribute per column`) over two-line stacked primary + subtitle cells;
 - never set `display: flex` directly on `<th>` or `<td>`;
 - lock data table column geometry with `table-layout: fixed` and `<colgroup>` so pagination and filtering never cause horizontal column jitter;
+- default operational data tables to viewport-filling pagination (`20` rows/page) with an explicit `共 N 条 · 第 a–b 条` summary and borderless-at-rest row action buttons;
 - use `minmax(0, 1fr)` and `min-width: 0; min-height: 0` on CSS Grid app shells so non-fullscreen windows never clip bottom-right controls;
 - avoid decorative copy in operational interfaces;
 - avoid many equally prominent actions;
@@ -341,7 +343,7 @@ Before finishing substantial frontend work, check the affected surface.
 ### Layout, Alignment & Scroll
 - Alignment, spacing, content width, and page padding are intentional.
 - Mixed-unit metric lists and table columns align on clean vertical axes without ragged edges or 1–2 character orphan wraps.
-- Data tables use single-line atomic columns (`table-layout: fixed` + `<colgroup>`) without stacked primary+subtitle clutter, `display: flex` directly on `<td>`/`<th>`, or cross-page column jitter.
+- Data tables use single-line atomic columns (`table-layout: fixed` + `<colgroup>`), viewport-filling pagination defaults (`20` rows/page with explicit total readout), and quiet row actions without stacked primary+subtitle clutter, `display: flex` directly on `<td>`/`<th>`, or cross-page column jitter.
 - Non-fullscreen windows contract cleanly (`minmax(0, 1fr)`) without clipping rightmost action columns or bottom-right pagination controls.
 - No unexplained page-level or table-level horizontal overflow.
 - Scroll container boundaries and sticky table headers follow one consistent rule across the app with zero nested vertical scrollbars.
@@ -384,7 +386,7 @@ Load only the relevant reference; do not read all references for every task.
 - `references/interface-restraint.md` — UI bloat, copy, cards, color semantics, compensatory surface/typographic hierarchy, borders, scroll architecture, dashboards.
 - `references/less-is-more.md` — deciding to remove existing capability: proving emptiness, spec conflicts, narrowing before deleting, negative guards.
 - `references/layout-stability.md` — loading, refreshing, CLS, routing, sidebar, theme geometry, pagination column lock, non-fullscreen grid contraction, animation.
-- `references/product-ux.md` — workflows, closed-loop navigation, anti-page-island patterns, single-line atomic tables, column alignment, forms, search/filter, task efficiency.
+- `references/product-ux.md` — workflows, closed-loop navigation, anti-page-island patterns, single-line atomic tables, pagination density, column alignment, forms, search/filter, task efficiency.
 - `references/responsive-platform.md` — responsive layout, mobile reality, viewport/browser behavior, restoration.
 - `references/accessibility-i18n.md` — keyboard, focus, contrast, zoom, preferences, localization, RTL.
 - `references/finalization.md` — accepted-state delivery, naming, comments, commits, PRs, handoffs.
