@@ -16,6 +16,9 @@ All notable changes to Frontend Experience Guardian are documented here.
   - Prefer single-line atomic columns (`one attribute per column, single-line alignment`) over stacking a primary value and a muted subtitle (`cell-primary` + `cell-sub`) inside table cells.
   - Prohibit applying `display: flex` directly to `<th>` or `<td>` elements so native `display: table-cell` and `vertical-align: middle` invariants are preserved.
   - Align mixed-unit metric lists and columns along a straight vertical axis with explicit headers, and prevent 1–2 character orphan wraps (`white-space: nowrap`).
+- Added **Table column stability across pagination & filtering** and **Non-fullscreen window shell contraction** to `references/layout-stability.md`:
+  - Lock data table column geometry with `table-layout: fixed; width: 100%;` and explicit `<colgroup>` definitions so variable inline badges or action buttons never cause horizontal column jitter across pages or filter states.
+  - Enforce `minmax(0, 1fr)` on CSS Grid app shells and `min-width: 0; min-height: 0` across workspace containers so non-fullscreen windows never clip the rightmost action column or bottom-right pagination bar.
 
 ### Changed
 
