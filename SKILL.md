@@ -125,6 +125,17 @@ Prioritize removals that are actively harmful over removals that are merely unti
 
 Read `references/less-is-more.md` for the full removal decision procedure.
 
+#### Minimum edge inset (MUST)
+
+Text never sits flush against a container edge, and never rides a border line. This fails through two different mechanisms — check both:
+
+1. **The container draws its own edge.** Any element that paints a background, border, or divider (card, pill, sticky group header, control band, tag, table header) must inset its text: at least `8px` horizontally and `4px` vertically at 12–14px type. `padding: Xpx 0` combined with a non-transparent background is prohibited. A fully rounded pill (`border-radius: 999px`) needs the horizontal inset measured from the curve, not the bounding box, so 6px is not enough.
+2. **The browser draws the edge for you.** Native gutter rendering ignores your padding: `legend` is forced into the `fieldset` border notch, `caption` sits outside the table box. Never rely on the notch look. Bring the element back into the padding explicitly (`fieldset > legend { float: left; width: 100%; padding: 0 }`) instead of compensating with `padding` on the `fieldset`, and verify geometrically rather than by eye.
+
+Inside a group, the group title and its fields share one left edge. A title inset by the border while fields inset by padding reads as a misalignment bug, not as intentional hierarchy.
+
+Measure when in doubt: compare `getBoundingClientRect()` of the container, the title, and the first field. If the title's top equals the container's top, the title is on the edge.
+
 ### 4. MUST preserve interface geometry across state changes
 
 Loading, routing, resizing, sidebar changes, theme changes, and data refreshes should not rebuild the application unnecessarily.
@@ -342,6 +353,8 @@ Before finishing substantial frontend work, check the affected surface.
 
 ### Layout, Alignment & Scroll
 - Alignment, spacing, content width, and page padding are intentional.
+- No text sits flush against a container edge, background band, or border line; every tinted band and bordered box has a real inset.
+- Native gutter elements (`legend`, `caption`) are explicitly returned to the container's padding instead of sitting in the border notch.
 - Mixed-unit metric lists and table columns align on clean vertical axes without ragged edges or 1–2 character orphan wraps.
 - Data tables use single-line atomic columns (`table-layout: fixed` + `<colgroup>`), viewport-filling pagination defaults (`20` rows/page with explicit total readout), and quiet row actions without stacked primary+subtitle clutter, `display: flex` directly on `<td>`/`<th>`, or cross-page column jitter.
 - Non-fullscreen windows contract cleanly (`minmax(0, 1fr)`) without clipping rightmost action columns or bottom-right pagination controls.
