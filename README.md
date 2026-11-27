@@ -20,10 +20,12 @@ npx skills add crazycola23/Frontend-Experience-Guardian --skill web-experience-g
 ## 在任务中使用
 
 - **普通实现**：改动触及哪个用户操作，就应用对应规则。只改文案时，沿用现有交付方式。
-- **常规代码评审**：将体验问题放进现有评审。已记录的工程规范归 Standards，工单承诺的用户行为归 Spec。
+- **常规代码评审**：沿用调用方的报告格式。Matt 双轴评审将仓库规范和有改前改后证据的体验回归纳入 Standards，将工单承诺或差异额外改变的行为纳入 Spec。
 - **专门体验评审**：默认静态、只读，输出统一报告。例如“评审微信端编辑评级后返回列表的体验”。
 - **明确要求实测**：按需读取对应平台的运行参考。报告区分静态和运行证据；必测步骤无法完成时保留原因。
 
 浏览器端的键盘、路由和布局等案例见 [Web 评审场景](skills/web-experience-guardian/evals/README.md)。两套独立安装包携带同一份[平台路由](skills/web-experience-guardian/references/guardian-routing.md)、[报告契约](skills/web-experience-guardian/references/guardian-contract.md)和 [JSON Schema](skills/web-experience-guardian/references/guardian-report.schema.json)。
+
+维护者可以用[双端试用场景](tests/review-scenarios.md)复核普通开发、代码评审和实测验收的行为。
 
 [MIT License](LICENSE)

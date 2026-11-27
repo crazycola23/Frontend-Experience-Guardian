@@ -2,6 +2,11 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 2026-11-27 — Review and runtime evidence follow-up
+
+- Preserve the caller's review format, surface demonstrable experience regressions, and clarify how shared copy and unresolved application identity are handled.
+- Allow automated acceptance to compare the requested runtime checks against the report before releasing a change.
+
 ## 2026-11-27 — Web and WeChat Mini Program skills
 
 - Split the original skill into two independently installable packages under `skills/`. Retained the browser references and evaluation scenarios in `web-experience-guardian`.

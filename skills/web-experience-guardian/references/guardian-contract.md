@@ -2,6 +2,8 @@
 
 点名体验评审时，每个受影响的应用包、构建目标各输出一个 JSON 对象，字段服从同目录的 [JSON Schema](guardian-report.schema.json)。向人汇报时可把发现显示成 `[P0][W-C2] file:line — 影响 → 修复`。向编排器交付时使用原始 JSON。
 
+包、目标或适配器尚未确认时，先汇报已有静态结果，标明“目标未确认，验收未完成”，待确认后再交付 v1 JSON。已确认路由、仅缺运行会话时，照常交付报告，将无法执行的必测操作逐项记为 `RUNTIME / required: true / NOT_RUN`，结论为 `INCOMPLETE`。已证实 P0 时按下文优先级判定。
+
 | 字段 | 填写方式 |
 | --- | --- |
 | `schemaVersion`、`package` | 版本填数字 `1`。包填相对仓库根目录的应用路径，根包用 `.`。 |
@@ -12,6 +14,18 @@
 | `blindspots[]` | 填与本次改动有关、证据尚未覆盖的具体影响。没有则填 `[]`。必测项缺证同时记入 `evidence`。 |
 
 先按请求和改动确定适用检查、必测项，再填结果。`PASS` 和 `FAIL` 代表实际检查已有结论，`FAIL` 需对应已证实的产品问题。`NOT_RUN` 代表该项未执行或中途未取得所需证据，例如自动化端口不可用。`NOT_APPLICABLE` 仅用于经确认与范围无关的条目，填 `required: false` 并说明理由。纯静态请求只记录静态检查；用户明确要求的运行检查必须逐项记录，即使环境阻止执行。
+
+## 明确要求实测且需要机读放行时
+
+从工单或用户原始验收要求独立列出必测操作，为每项指定稳定的 `probeId`。每项各留一条 `kind: RUNTIME`、`required: true` 的记录。在 `detail` 写明本次操作与观察；只有静态依据时保留静态记录，并另记该实测项为 `NOT_RUN`。
+
+按 v1 Schema 校验报告结构后，可用本技能附带的[覆盖检查脚本](../scripts/check_runtime_coverage.py)对照原始清单。以下命令从技能目录运行，验收项为鼠标关闭弹窗和键盘关闭后焦点恢复。
+
+```sh
+python scripts/check_runtime_coverage.py report.json --require W-D3.mouse-close --require W-D3.keyboard-restore
+```
+
+脚本使用 Python 3.8+ 标准库。退出码 `0` 表示报告结论为 `PASS`、清单中的每项均有唯一的必测运行通过记录、报告无失败证据；`1` 表示未放行，`2` 表示参数或输入读取错误。Schema 合法的 `INCOMPLETE` 报告仍可交付。清单的完整性取决于原始要求，观察的真实性需回看证据。
 
 ## 计算 verdict
 

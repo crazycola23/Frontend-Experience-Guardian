@@ -81,6 +81,8 @@ Color in operational interfaces must have stable meaning and clear visual priori
 
 When you strip away decorative colors and practice "Normal is Silent", **you MUST compensate with structural surface depth and typographic contrast**. Otherwise, the page collapses into a flat, monotonous sheet of identical text where the eye has no natural entry point or scanning rhythm ("视觉层级缺失").
 
+The colors and layers below illustrate a light operational dashboard. In a dark or high-contrast theme, evaluate the affected reading order using the product's own surface and text tokens. Keep an existing hierarchy when the task and content remain distinguishable.
+
 1. **Three-layer surface luminance hierarchy (`Canvas → Elevated Surface → Tinted Header/Control Band`):**
    - **Layer 0 — Recessed Workspace Canvas** (e.g. `#F2F5F7` or `#F4F6F8`): Use a cool-neutral recessed background for the scrolling workspace canvas so primary content blocks do not float in undifferentiated white space.
    - **Layer 1 — Elevated Primary Surface** (`#FFFFFF` with `1px solid` border and subtle ambient shadow `0 1px 3px rgba(15, 23, 42, 0.04)`): Use pure white for primary operational tables, KPI summary strips, and inspection cards so they lift clearly off the canvas.
