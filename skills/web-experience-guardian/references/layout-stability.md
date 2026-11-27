@@ -77,7 +77,7 @@ In CSS Grid or Flexbox app shells (`overflow: hidden` on the outer shell), `1fr`
 
 ## Verification targets
 
-When tooling permits:
+For an explicitly requested browser test, choose the observations relevant to the change:
 
 - compare loading and loaded screenshots;
 - inspect route changes for lateral shift;

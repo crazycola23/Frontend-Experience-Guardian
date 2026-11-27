@@ -2,6 +2,11 @@
 
 All notable changes to Frontend Experience Guardian are documented here.
 
+## 2026-11-27 — Web and WeChat Mini Program skills
+
+- Split the original skill into two independently installable packages under `skills/`. Retained the browser references and evaluation scenarios in `web-experience-guardian`.
+- Added a native WeChat and uni-app `mp-weixin` guardian, target-aware routing and a shared static/runtime evidence contract. Dedicated experience reviews default to static evidence.
+
 ## 0.5.1 — 2026-11-10
 
 ### Added

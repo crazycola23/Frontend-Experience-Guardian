@@ -46,7 +46,7 @@ When relevant, respect:
 
 Motion should not be necessary to understand state.
 
-For substantial UI changes, 200% browser zoom is a useful practical check when tooling permits.
+When the user requests browser verification, 200% browser zoom is a useful check for affected layouts.
 
 ## Touch
 

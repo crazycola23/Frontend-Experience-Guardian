@@ -14,7 +14,7 @@ Complex editors, canvases, virtualized grids, split panes, and visualization wor
 
 Avoid different breakpoints in Tailwind, custom CSS, JS state, and container queries unless intentionally coordinated.
 
-Test representative sizes appropriate to the product. A useful generic set is 320, 375, 430, 768, 1024, 1280, 1440, and 1920, plus a pixel on either side of important breakpoints.
+Use the product's supported breakpoints during source review. For an explicitly requested browser test, choose representative sizes from that range and sample either side of a changed breakpoint.
 
 Resize should not flicker, remount, replay entrance animation, or oscillate between layouts.
 
@@ -44,7 +44,7 @@ Intrinsic wide content can own a local horizontal scroll region.
 
 ## Browser history and restoration
 
-When navigation or overlays affect URL/history, verify browser Back and Forward produce expected results.
+When navigation or overlays affect URL/history, trace the Back and Forward handlers. Exercise those controls when the user requests browser verification.
 
 Preserve or intentionally restore scroll/focus state when returning to a list or closing a contextual workflow.
 

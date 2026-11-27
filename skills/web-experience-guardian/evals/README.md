@@ -1,6 +1,6 @@
 # Evals
 
-These scenarios test whether Frontend Experience Guardian changes agent behavior in measurable product-quality ways.
+These scenarios test whether Web Experience Guardian changes agent behavior in measurable product-quality ways.
 
 Run each task twice when possible:
 
